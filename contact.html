@@ -1,0 +1,162 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <!-- Full Name: Elisha Jenser A. Nomo 
+     Section: WD-202
+     Activity: Under The Lamp
+     Date: October 2026 
+     -->
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="Get in touch with Under The Lamp Coffee. Send us a message, find our location, follow us on Instagram, or give us a call.">
+    <title>Contact Us | Under The Lamp Coffee</title>
+
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Archivo+Black&family=DM+Sans:wght@400;500;700&family=IBM+Plex+Mono:wght@400;500;700&family=Inter:wght@500;700;800&family=Patrick+Hand&family=Patrick+Hand+SC&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="styles.css">
+    <link rel="icon" type="image/jpeg" sizes="100x100" href="img/favicon.png">
+
+    <script src="script.js" defer></script>
+</head>
+
+<body class="utl contact">
+<a href="#main-content" class="skip-link">Skip to main content</a>
+
+<div id="container">
+
+    <!-- HEADER AND NAVIGATION -->
+    <header>
+        <a href="index.html" class="logo-link">
+            <img src="img/logo.jpeg" alt="Under The Lamp Coffee logo">
+        </a>
+
+        <!-- Hamburger button: shown on mobile once js/script.js runs -->
+        <button class="menu-toggle" type="button"
+                aria-expanded="false"
+                aria-controls="primary-nav"
+                aria-label="Open menu">
+            <span></span>
+            <span></span>
+            <span></span>
+        </button>
+
+        <nav id="primary-nav" aria-label="Main Navigation">
+            <ul>
+                <li><a href="index.html">Home</a></li>
+                <li><a href="about.html">About Us</a></li>
+                <li><a href="menu.html">Menu</a></li>
+                <li><a href="contact.html" class="active" aria-current="page">Contact Us</a></li>
+            </ul>
+        </nav>
+    </header>
+
+    <main id="main-content">
+
+        <!-- HERO: photo only, header floats on top of it -->
+        <section class="hero" aria-label="Meet us under the lamp">
+            <h1 class="sr-only">Contact Under The Lamp Coffee</h1>
+            <img src="img/hero-image.jpeg" alt="The Under The Lamp banner, reading “meet me under the lamp”" class="hero-image">
+            <div class="hero-overlay"></div>
+        </section>
+
+        <!-- LET'S CONNECT: contact form -->
+        <section class="contact-form-section" aria-labelledby="contact-title">
+            <h2 id="contact-title">Let’s Connect</h2>
+
+            <form class="contact-form" action="#" method="POST">
+
+                <fieldset>
+                    <legend class="sr-only">Personal Information</legend>
+
+                    <div class="form-field">
+                        <label for="name">Full Name</label>
+                        <input type="text" id="name" name="name"
+                               placeholder="Enter your full name"
+                               maxlength="100" required>
+                    </div>
+
+                    <div class="form-field">
+                        <label for="email">Email Address</label>
+                        <input type="email" id="email" name="email"
+                               placeholder="youremail@example.com"
+                               maxlength="100" required>
+                    </div>
+                </fieldset>
+
+                <fieldset>
+                    <legend class="sr-only">Inquiry Information</legend>
+
+                    <div class="form-field">
+                        <label for="source">Where did you find us?</label>
+                        <select id="source" name="source" required>
+                            <option value="" disabled selected>Choose one</option>
+                            <option value="instagram">Instagram</option>
+                            <option value="facebook">Facebook</option>
+                            <option value="tiktok">TikTok</option>
+                        </select>
+                    </div>
+                </fieldset>
+
+                <fieldset class="feedback">
+                    <legend class="sr-only">Feedback</legend>
+
+                    <div class="form-field">
+                        <label for="message">Share your experience with UTL with us :)</label>
+                        <textarea id="message" name="message"
+                                  placeholder="We hope you enjoyed UTL!"
+                                  maxlength="800" rows="6" required></textarea>
+                    </div>
+                </fieldset>
+
+                <div class="form-buttons">
+                    <button type="submit">Submit</button>
+                    <button type="reset">Clear Form</button>
+                </div>
+
+            </form>
+        </section>
+
+        <!-- CONTACT INFO: location, Instagram, phone -->
+        <section class="contact-info-section" aria-label="Contact details">
+
+            <article class="contact-card">
+                <p class="contact-label">VISIT US</p>
+                <h3>Our Location</h3>
+                <address>18-17 Santol St., Trinidad Village, Bacolor City, Pampanga</address>
+            </article>
+
+            <article class="contact-card">
+                <p class="contact-label">FOLLOW US</p>
+                <h3>
+                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+                        <rect x="3" y="3" width="18" height="18" rx="5"/>
+                        <circle cx="12" cy="12" r="4"/>
+                        <circle cx="17.2" cy="6.8" r="0.6" fill="currentColor"/>
+                    </svg>Instagram
+                </h3>
+                <a href="https://www.instagram.com/underthelampcoffee/" target="_blank" rel="noopener noreferrer">@underthelampcoffee</a>
+                <p>Follow us for updates, drinks, events, and moments under the lamp.</p>
+            </article>
+
+            <article class="contact-card">
+                <p class="contact-label">CALL US</p>
+                <h3>Let's Talk</h3>
+                <a href="tel:8145559608">(814) 555-9608</a>
+                <p>Have a question? Give us a call and we'll be happy to help.</p>
+            </article>
+
+        </section>
+
+    </main>
+
+    <!-- FOOTER -->
+    <footer>
+        <div class="footer-bottom">
+            <p>&copy; 2026 Under The Lamp. All Rights Reserved.</p>
+            <p>Created by Jenser Nomo</p>
+        </div>
+    </footer>
+</div>
+</body>
+</html>

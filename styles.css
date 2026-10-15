@@ -1,0 +1,1867 @@
+/*
+    Full Name: Elisha Jenser A. Nomo
+    Section: WD-202
+    Activity: Under The Lamp
+    Date: October 2026
+
+    FILE MAP
+    1. Design tokens
+    2. Base (reset, typography, buttons, accessibility)
+    3. Header + navigation (hamburger lives in the mobile query)
+    4. Home page sections
+    4b. About page
+    4c. Menu page
+    4d. Contact page
+    5. Footer
+    6. Media queries: MOBILE, TABLET, DESKTOP
+    7. Print
+*/
+
+
+/* ==========================================================
+   1. DESIGN TOKENS
+   ========================================================== */
+
+:root {
+    --navy: #000033;
+    --navy-soft: #1a235a;
+    --royal: #00008b;
+    --sand: #e9cba5;
+    --cream: #fdfbd4;
+    --sky: #a7c7e7;
+    --ink: #10183f;
+
+    --font-display: "Archivo Black", sans-serif;
+    --font-body: "DM Sans", sans-serif;
+
+    /* horizontal page gutter: 6% on small screens, centres a 1200px column on wide ones */
+    --gutter: max(6%, calc((100% - 1200px) / 2));
+    --section-y: 5rem;
+}
+
+
+/* ==========================================================
+   2. BASE
+   ========================================================== */
+
+*,
+*::before,
+*::after {
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+}
+
+html {
+    scroll-behavior: smooth;
+}
+
+body {
+    background-color: var(--cream);
+    color: var(--ink);
+    font-family: var(--font-body);
+    line-height: 1.6;
+    overflow-x: hidden;
+}
+
+img,
+video {
+    display: block;
+    max-width: 100%;
+}
+
+img {
+    width: 100%;
+}
+
+video {
+    width: 80%;
+    max-width: 900px;
+    height: auto;
+    margin: 40px auto;
+}
+
+a {
+    color: inherit;
+}
+
+#container {
+    width: 100%;
+    min-height: 100vh;
+    display: flex;
+    flex-direction: column;
+}
+
+main {
+    flex: 1;
+}
+
+/* Typography */
+
+h1, h2, h3,
+.section-label,
+.eyebrow {
+    font-family: var(--font-display);
+}
+
+h2 {
+    font-size: clamp(2rem, 5vw, 4.5rem);
+    line-height: 1;
+}
+
+h2 span,
+h1 span {
+    color: var(--sand);
+}
+
+.section-label,
+.eyebrow,
+.small-label {
+    font-size: 0.75rem;
+    letter-spacing: 0.16em;
+    font-weight: 700;
+}
+
+.section-label {
+    color: var(--royal);
+    margin-bottom: 1rem;
+}
+
+.small-label {
+    color: #777;
+    margin-bottom: 0.75rem;
+}
+
+/* Buttons */
+
+.button {
+    display: inline-block;
+    padding: 0.9rem 1.5rem;
+    border: 2px solid transparent;
+    text-decoration: none;
+    font-weight: 700;
+    transition: transform 0.25s ease, background-color 0.25s ease, color 0.25s ease;
+}
+
+.button:hover {
+    transform: translateY(-3px);
+}
+
+.button-primary {
+    background-color: var(--sand);
+    color: var(--navy);
+}
+
+.button-primary:hover {
+    background-color: #ffffff;
+}
+
+.button-outline {
+    border-color: var(--cream);
+    color: var(--cream);
+}
+
+.button-outline:hover {
+    background-color: var(--cream);
+    color: var(--navy);
+}
+
+.button-dark {
+    background-color: var(--navy);
+    color: var(--cream);
+}
+
+/* Accessibility: skip link, keyboard focus */
+
+.skip-link {
+    position: absolute;
+    top: -100px;
+    left: 1rem;
+    z-index: 200;
+    padding: 0.75rem 1.25rem;
+    background-color: var(--sand);
+    color: var(--navy);
+    font-weight: 700;
+    text-decoration: none;
+}
+
+.skip-link:focus {
+    top: 1rem;
+}
+
+:focus-visible {
+    outline: 3px solid var(--royal);
+    outline-offset: 3px;
+}
+
+header :focus-visible,
+.hero :focus-visible,
+.intro-aside :focus-visible,
+.featured-drinks :focus-visible,
+.experience-section :focus-visible,
+.contact-box :focus-visible,
+footer :focus-visible {
+    outline-color: var(--sand);
+}
+
+
+/* ==========================================================
+   3. HEADER + NAVIGATION
+   Default = a simple wrapping row, so the menu still works
+   if JavaScript is off. The hamburger only takes over once
+   js/script.js adds .nav-enabled to the header.
+   ========================================================== */
+
+header {
+    position: sticky;
+    top: 0;
+    z-index: 100;
+
+    background-color: var(--navy);
+    padding: 14px 5%;
+
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    justify-content: space-between;
+    gap: 0.5rem 1rem;
+}
+
+.logo-link {
+    display: block;
+    flex-shrink: 0;
+}
+
+.logo-link img {
+    width: 190px;
+    height: auto;
+}
+
+header nav {
+    background-color: transparent;
+}
+
+header nav ul {
+    list-style: none;
+    display: flex;
+    flex-wrap: wrap;
+}
+
+header nav a {
+    display: block;
+    padding: 20px 12px;
+
+    color: #ffffff;
+    text-decoration: none;
+    font-weight: 700;
+
+    transition: background-color 0.25s ease, color 0.25s ease;
+}
+
+header nav a:hover,
+header nav a.active {
+    background-color: var(--sand);
+    color: var(--navy);
+}
+
+/* Hamburger button (hidden until JS enables it, see mobile query) */
+
+.menu-toggle {
+    display: none;
+    width: 44px;
+    height: 44px;
+    padding: 0;
+
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    gap: 5px;
+
+    background: transparent;
+    border: 0;
+    color: var(--cream);
+    cursor: pointer;
+    font: inherit;
+}
+
+.menu-toggle span {
+    display: block;
+    width: 22px;
+    height: 2px;
+    background-color: currentColor;
+    transition: transform 0.25s ease, opacity 0.2s ease;
+}
+
+/* The 3 lines morph into an X when the menu is open */
+.menu-toggle[aria-expanded="true"] span:nth-child(1) {
+    transform: translateY(7px) rotate(45deg);
+}
+
+.menu-toggle[aria-expanded="true"] span:nth-child(2) {
+    opacity: 0;
+}
+
+.menu-toggle[aria-expanded="true"] span:nth-child(3) {
+    transform: translateY(-7px) rotate(-45deg);
+}
+
+@keyframes nav-drop {
+    from { opacity: 0; transform: translateY(-8px); }
+    to   { opacity: 1; transform: translateY(0); }
+}
+
+
+/* ==========================================================
+   4. HOME PAGE
+   Built from the Figma frame "Home (Desktop)".
+   Shared header / fonts / footer are keyed to <body class="utl">
+   (used by Home, About, Menu and Contact).
+
+   FONTS (swap here if Figma's Inspect panel says otherwise):
+   headings  -> Inter ExtraBold
+   body text -> IBM Plex Mono
+   "Must-Try Drinks!" -> Patrick Hand SC
+   handwritten subtitle on Menu -> Patrick Hand
+   ========================================================== */
+
+.utl {
+    --font-display: "Inter", sans-serif;
+    --font-body: "IBM Plex Mono", monospace;
+    --font-script: "Patrick Hand SC", cursive;
+    --font-script-text: "Patrick Hand", cursive;
+    --text-muted: #b4bbe4;
+    --gutter: max(6%, calc((100% - 1120px) / 2));
+
+    background-color: var(--navy);
+    color: var(--cream);
+}
+
+.sr-only {
+    position: absolute;
+    width: 1px;
+    height: 1px;
+    margin: -1px;
+    overflow: hidden;
+    clip: rect(0, 0, 0, 0);
+    white-space: nowrap;
+}
+
+/* ---------- Header floats over the hero ---------- */
+
+.utl header {
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+
+    background-color: rgba(0, 0, 51, 0);
+    transition: background-color 0.3s ease;
+}
+
+/* Navy backdrop that fades into the photo. It belongs to the header (not the
+   photo), so the nav looks the same on every page, even over a bright image. */
+.utl header::before {
+    content: "";
+    position: absolute;
+    inset: 0 0 -60px 0;
+    z-index: -1;
+    pointer-events: none;
+
+    background: linear-gradient(
+        180deg,
+        var(--navy) 0%,
+        rgba(0, 0, 51, 0.92) 45%,
+        rgba(0, 0, 51, 0) 100%
+    );
+    transition: opacity 0.3s ease;
+}
+
+/* JS adds .is-scrolled once you leave the hero so the links stay readable */
+.utl header.is-scrolled {
+    background-color: var(--navy);
+    box-shadow: 0 6px 20px rgba(0, 0, 0, 0.35);
+}
+
+.utl header.is-scrolled::before {
+    opacity: 0;
+}
+
+.utl header nav ul {
+    gap: 2.5rem;
+}
+
+.utl header nav a {
+    padding: 0.5rem 0;
+    background-color: transparent;
+    border-bottom: 2px solid transparent;
+    color: #ffffff;
+    font-family: var(--font-body);
+    font-size: 0.95rem;
+    font-weight: 400;
+}
+
+.utl header nav a:hover,
+.utl header nav a.active {
+    background-color: transparent;
+    border-bottom-color: var(--sand);
+    color: #ffffff;
+}
+
+/* ---------- Hero: photo only, like the Figma ---------- */
+
+.hero {
+    position: relative;
+    height: 340px;
+    overflow: hidden;
+    background-color: var(--navy);   /* stays dark even if the photo is slow or missing */
+}
+
+.hero-image {
+    position: absolute;
+    inset: 0;
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    object-position: center;
+}
+
+.hero-overlay {
+    position: absolute;
+    inset: 0;
+    background:
+        linear-gradient(180deg, rgba(0, 0, 51, 0.7) 0%, rgba(0, 0, 51, 0) 40%),
+        rgba(0, 0, 51, 0.55);
+}
+
+/* ---------- Intro ---------- */
+
+.intro-section {
+    background-color: var(--navy);
+    padding: 4rem var(--gutter);
+
+    display: grid;
+    grid-template-columns: 1fr;
+    gap: 2.5rem;
+    align-items: start;
+}
+
+.intro-content h2 {
+    max-width: 10.5em;
+    margin-bottom: 1.5rem;
+
+    color: var(--cream);
+    font-size: clamp(2.1rem, 7vw, 3.5rem);
+    font-weight: 800;
+    line-height: 1.1;
+}
+
+.intro-content > p {
+    max-width: 40rem;
+    margin-bottom: 1.25rem;
+
+    color: var(--text-muted);
+    font-size: 0.95rem;
+    line-height: 1.8;
+}
+
+.intro-aside {
+    background-color: var(--sky);
+    color: var(--navy);
+    padding: 2rem;
+}
+
+.intro-aside h3 {
+    margin-bottom: 0.9rem;
+    font-size: 1.5rem;
+    font-weight: 800;
+}
+
+.intro-aside p {
+    font-size: 0.9rem;
+    font-weight: 500;
+    line-height: 1.7;
+}
+
+/* ---------- Must-Try Drinks (split section) ---------- */
+
+.drinks-section {
+    display: grid;
+    grid-template-columns: 1fr;
+    background-color: var(--navy-soft);
+}
+
+/* left: photo background with three drink photos stacked on top */
+.drinks-visual {
+    position: relative;
+    min-height: 560px;
+    padding: 3rem 1.5rem;
+    overflow: hidden;
+
+    display: grid;
+    place-items: center;
+}
+
+.drinks-bg {
+    position: absolute;
+    inset: 0;
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+}
+
+.drinks-visual::after {
+    content: "";
+    position: absolute;
+    inset: 0;
+    background-color: rgba(0, 0, 51, 0.55);
+}
+
+.drinks-photos {
+    position: relative;
+    z-index: 1;
+
+    width: min(72%, 320px);
+    display: grid;
+    gap: 2px;
+
+    border-radius: 0.9rem;
+    overflow: hidden;
+    background-color: var(--navy);
+}
+
+.drinks-photos img {
+    width: 100%;
+    height: auto;
+    aspect-ratio: 3 / 2;
+    object-fit: cover;
+}
+
+/* right: heading, numbered cards, closing line */
+.drinks-panel {
+    padding: 3rem 6%;
+    background-color: var(--navy-soft);
+}
+
+.drinks-panel h2 {
+    color: #ffffff;
+    font-family: var(--font-script);
+    font-size: clamp(2.3rem, 8vw, 3.2rem);
+    font-weight: 400;
+    letter-spacing: 0.02em;
+    line-height: 1;
+    text-transform: uppercase;
+}
+
+.drinks-sub {
+    margin-top: 0.4rem;
+    font-size: 0.85rem;
+}
+
+.drink-list {
+    list-style: none;
+    counter-reset: drink;
+
+    display: grid;
+    gap: 1.25rem;
+    margin: 2rem 0;
+}
+
+.drink-card {
+    counter-increment: drink;
+
+    display: grid;
+    grid-template-columns: 2.75rem 1fr;
+    align-items: center;
+    gap: 0.5rem;
+
+    padding: 1.4rem 1.25rem;
+    background-color: var(--cream);
+    color: #111111;
+}
+
+.drink-card::before {
+    content: counter(drink) ".";
+    font-family: var(--font-body);
+    font-size: 1.1rem;
+    font-weight: 700;
+    text-align: center;
+}
+
+.drink-card h3 {
+    margin-bottom: 0.25rem;
+    font-family: var(--font-body);
+    font-size: 1.05rem;
+    font-weight: 700;
+}
+
+.drink-card p {
+    font-size: 0.85rem;
+    line-height: 1.5;
+}
+
+.drinks-note {
+    text-align: center;
+    font-size: 0.95rem;
+}
+
+/* ---------- Experience ---------- */
+
+.experience-section {
+    background-color: var(--navy);
+    padding: 4.5rem 6% 5rem;
+}
+
+.experience-section .section-heading {
+    max-width: none;
+    margin: 0 auto 2.5rem;
+    text-align: center;
+}
+
+.experience-section h2 {
+    margin-bottom: 0.75rem;
+    color: var(--cream);
+    font-size: clamp(2rem, 6.5vw, 3.6rem);
+    font-weight: 800;
+    line-height: 1.1;
+}
+
+.experience-section .section-heading p {
+    color: var(--text-muted);
+    font-size: 0.9rem;
+}
+
+.experience-grid {
+    display: grid;
+    grid-template-columns: 1fr;
+    gap: 2rem;
+
+    width: min(1120px, 100%);
+    margin: 0 auto;
+}
+
+.experience-card {
+    background-color: var(--navy-soft);
+}
+
+.experience-image {
+    aspect-ratio: 5 / 3;
+    overflow: hidden;
+}
+
+.experience-image img {
+    height: 100%;
+    object-fit: cover;
+}
+
+.experience-content {
+    padding: 1.25rem 1.5rem 1.5rem;
+}
+
+.experience-content h3 {
+    margin-bottom: 0.5rem;
+    color: #ffffff;
+    font-size: 1.1rem;
+    font-weight: 700;
+}
+
+.experience-content p {
+    font-size: 0.85rem;
+    line-height: 1.6;
+}
+
+/* Portrait video: shown on mobile INSTEAD of the three cards (see mobile query) */
+.experience-video {
+    display: none;
+    width: min(58%, 240px);
+    margin: 0 auto;
+}
+
+.experience-video video {
+    display: block;
+    width: 100%;
+    max-width: none;
+    height: auto;
+    margin: 0;
+    aspect-ratio: 9 / 16;
+    background-color: #000000;
+    object-fit: contain;
+}
+
+/* ---------- Audio sample (class requirement) ---------- */
+
+.music-section {
+    padding: 3rem 6%;
+    background-color: var(--navy-soft);
+    text-align: center;
+}
+
+.music-section h3 {
+    margin-bottom: 0.3rem;
+    color: var(--cream);
+    font-size: 1.4rem;
+    font-weight: 800;
+}
+
+.music-section p {
+    color: var(--text-muted);
+    font-size: 0.9rem;
+}
+
+.music-section audio {
+    display: block;
+    width: min(480px, 100%);
+    margin: 1.25rem auto 0;
+}
+
+
+/* ==========================================================
+   4b. ABOUT PAGE
+   Built from the Figma frame "About Us (Desktop)".
+   Uses the same header, hero and footer as the home page.
+   ========================================================== */
+
+.about {
+    background-color: var(--cream);
+    color: var(--navy);
+}
+
+/* ---------- Our story: photo + navy card ---------- */
+
+.story-section {
+    padding: 2.5rem var(--gutter) 0;
+
+    display: grid;
+    grid-template-columns: 1fr;
+    gap: 1.75rem;
+    align-items: center;
+}
+
+.story-image {
+    width: 100%;
+    aspect-ratio: 4 / 3;
+    overflow: hidden;
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.25);
+}
+
+.story-image img {
+    height: 100%;
+    object-fit: cover;
+}
+
+.story-content {
+    padding: 1.75rem;
+
+    background-color: var(--navy);
+    border-radius: 0.5rem;
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.25);
+}
+
+.story-content .section-label {
+    margin-bottom: 0.5rem;
+    color: var(--sky);
+    font-family: var(--font-body);
+    font-size: 0.8rem;
+    font-weight: 400;
+    letter-spacing: 0.08em;
+}
+
+.story-content h2 {
+    margin-bottom: 1.25rem;
+    color: var(--sky);
+    font-size: clamp(1.9rem, 7vw, 2.75rem);
+    font-weight: 800;
+    line-height: 1.15;
+}
+
+.story-content p:not(.section-label) {
+    margin-bottom: 1rem;
+    color: var(--text-muted);
+    font-size: 0.85rem;
+    line-height: 1.8;
+}
+
+.story-content p:last-child {
+    margin-bottom: 0;
+}
+
+/* ---------- Our craft: heading + "Made With Care" card ---------- */
+
+.craft-section {
+    padding: 3rem var(--gutter) 4rem;
+
+    display: grid;
+    grid-template-columns: 1fr;
+    gap: 2rem;
+    align-items: center;
+}
+
+.craft-content h2 {
+    margin-bottom: 1.25rem;
+    color: var(--navy-soft);
+    font-size: clamp(2.2rem, 9vw, 4.5rem);
+    font-weight: 800;
+    line-height: 1.15;
+}
+
+.craft-content p {
+    max-width: 40rem;
+    margin-bottom: 0.9rem;
+    color: var(--navy);
+    font-size: 0.85rem;
+    line-height: 1.8;
+}
+
+.craft-note {
+    padding: 2rem;
+
+    background-color: var(--navy);
+    border-radius: 0.4rem;
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.25);
+}
+
+.craft-note h3 {
+    margin-bottom: 0.75rem;
+    color: var(--sky);
+    font-size: 1.6rem;
+    font-weight: 800;
+    line-height: 1.2;
+}
+
+.craft-note p {
+    color: var(--text-muted);
+    font-size: 0.9rem;
+    line-height: 1.7;
+}
+
+
+/* ==========================================================
+   4c. MENU PAGE
+   Built from the Figma frame "Menu (Desktop)".
+   Uses the same header, photo background and footer as the
+   other pages. Sections: MENU HERO (photo + heading + 3 price
+   tables) and THE UTL WAY (heading + quote box).
+   ========================================================== */
+
+/* ---------- Menu hero: photo behind heading and tables ---------- */
+
+.hero.menu-hero {
+    height: auto;   /* grows with the tables instead of the fixed .hero height */
+}
+
+/* Lighter than the home overlay so the warm photo still shows through */
+.menu-hero .hero-overlay {
+    background: linear-gradient(
+        180deg,
+        rgba(0, 0, 51, 0.8) 0%,
+        rgba(0, 0, 51, 0.5) 40%,
+        rgba(0, 0, 51, 0.35) 100%
+    );
+}
+
+.menu-hero-content {
+    position: relative;
+    z-index: 2;
+    padding: 7.5rem var(--gutter) 4rem;
+}
+
+.menu-hero .section-heading {
+    max-width: 52rem;
+    margin: 0 auto 2.5rem;
+    text-align: center;
+}
+
+.menu-hero .section-heading h2 {
+    margin-bottom: 0.75rem;
+    color: var(--cream);
+    font-size: clamp(2rem, 7vw, 2.9rem);
+    font-weight: 800;
+    line-height: 1.15;
+}
+
+.menu-hero .section-heading p {
+    color: var(--cream);
+    font-family: var(--font-script-text);
+    font-size: 1.15rem;
+    line-height: 1.5;
+}
+
+/* ---------- Price tables (Coffee, Matcha, Non-Coffee) ---------- */
+
+.menu-tables {
+    display: grid;
+    grid-template-columns: 1fr;
+    gap: 1.5rem;
+    align-items: start;   /* each table keeps its own height, like the Figma */
+}
+
+.menu-table {
+    width: 100%;
+    border-collapse: separate;
+    border-spacing: 0;
+
+    background-color: var(--cream);
+    color: var(--navy);
+    font-family: var(--font-display);
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.3);
+}
+
+/* Table title row ("COFFEE") */
+.menu-table caption {
+    padding: 0.9rem 1rem;
+
+    background-color: var(--cream);
+    border: 1px solid var(--navy-soft);
+    border-bottom: 0;
+    border-radius: 0.25rem 0.25rem 0 0;
+
+    color: var(--navy);
+    font-size: 0.85rem;
+    font-weight: 700;
+    letter-spacing: 0.03em;
+    text-align: left;
+    text-transform: uppercase;
+}
+
+/* Item name + price */
+.menu-table th,
+.menu-table td {
+    padding: 0.8rem 1rem;
+    border-top: 1px solid var(--navy-soft);
+    font-size: 0.85rem;
+    font-weight: 700;
+    line-height: 1.3;
+}
+
+.menu-table th {
+    border-left: 1px solid var(--navy-soft);
+    text-align: left;
+}
+
+.menu-table td {
+    width: 34%;
+    border-left: 1px solid var(--navy-soft);
+    border-right: 1px solid var(--navy-soft);
+    font-size: 0.95rem;
+    text-align: right;
+}
+
+.menu-table tbody tr:last-child th,
+.menu-table tbody tr:last-child td {
+    border-bottom: 1px solid var(--navy-soft);
+}
+
+.menu-table tbody tr:last-child th {
+    border-bottom-left-radius: 0.25rem;
+}
+
+.menu-table tbody tr:last-child td {
+    border-bottom-right-radius: 0.25rem;
+}
+
+/* ---------- The UTL way: heading + quote box ---------- */
+
+.menu-experience {
+    padding: 4rem var(--gutter);
+    background-color: var(--navy-soft);
+
+    display: grid;
+    grid-template-columns: 1fr;
+    gap: 2.5rem;
+    align-items: center;
+}
+
+.menu-experience-content h2 {
+    max-width: 11em;
+    margin-bottom: 1.5rem;
+    color: var(--cream);
+    font-size: clamp(2.2rem, 9vw, 4rem);
+    font-weight: 800;
+    line-height: 1.3;
+}
+
+.menu-experience-content p {
+    max-width: 44rem;
+    margin-bottom: 1.25rem;
+    color: var(--cream);
+    font-size: 0.95rem;
+    line-height: 1.8;
+}
+
+.menu-quote {
+    padding: 2.5rem 2rem;
+
+    background-color: var(--sky);
+    border-radius: 0.25rem;
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.25);
+
+    color: var(--navy);
+    text-align: center;
+}
+
+.menu-quote blockquote {
+    font-family: var(--font-body);
+    font-size: 1.3rem;
+    font-weight: 700;
+    line-height: 1.5;
+}
+
+
+/* ==========================================================
+   4d. CONTACT PAGE
+   Built from the Figma frame "Contact Us (Desktop)".
+   Uses the same header and photo hero as the other pages.
+   Sections: HERO (photo only), "Let's Connect" FORM CARD,
+   and the CONTACT INFO strip (location, Instagram, phone).
+   ========================================================== */
+
+.contact {
+    background-color: var(--cream);
+    color: var(--navy);
+}
+
+/* ---------- "Let's Connect" form ---------- */
+
+.contact-form-section {
+    padding: 2.5rem var(--gutter) 3rem;
+    text-align: center;
+}
+
+.contact-form-section h2 {
+    margin-bottom: 1.75rem;
+    color: var(--navy);
+    font-size: clamp(2.5rem, 11vw, 4.25rem);
+    font-weight: 800;
+    letter-spacing: -0.02em;
+    line-height: 1.1;
+}
+
+.contact-form {
+    width: min(100%, 520px);
+    margin: 0 auto;
+    padding: 1.5rem 1.25rem;
+
+    display: grid;
+    gap: 1.25rem;
+
+    background-color: var(--navy-soft);
+    border-radius: 0.5rem;
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.25);
+    text-align: left;
+}
+
+/* Fieldsets only group the fields; their legends are read by screen readers */
+.contact-form fieldset {
+    min-width: 0;
+    display: grid;
+    gap: 1.25rem;
+    border: 0;
+}
+
+.form-field {
+    display: grid;
+    gap: 0.4rem;
+}
+
+.contact-form label {
+    color: #ffffff;
+    font-family: var(--font-display);
+    font-size: 0.72rem;
+    font-weight: 700;
+    letter-spacing: 0.03em;
+    text-transform: uppercase;
+}
+
+/* The feedback label is centred in the Figma */
+.contact-form .feedback label {
+    text-align: center;
+}
+
+/* Pill-shaped light gray fields */
+.contact-form input,
+.contact-form select,
+.contact-form textarea {
+    width: 100%;
+    padding: 0.6rem 1rem;
+
+    background-color: #d9d9d9;
+    border: 0;
+    border-radius: 999px;
+
+    color: var(--navy);
+    font-family: var(--font-body);
+    font-size: 0.9rem;
+}
+
+.contact-form input,
+.contact-form select {
+    min-height: 2.5rem;
+}
+
+.contact-form textarea {
+    min-height: 8rem;
+    padding: 1rem;
+    border-radius: 1.25rem;
+    resize: vertical;
+}
+
+.contact-form ::placeholder {
+    color: #666666;
+}
+
+/* Dropdown arrow (the browser's default is removed so it matches the pills) */
+.contact-form select {
+    padding-right: 2.5rem;
+    appearance: none;
+    background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 12 8'%3E%3Cpath d='M1 1l5 5 5-5' fill='none' stroke='%23000033' stroke-width='2' stroke-linecap='round'/%3E%3C/svg%3E");
+    background-repeat: no-repeat;
+    background-position: right 1rem center;
+    background-size: 0.8rem;
+    cursor: pointer;
+}
+
+.contact-form :focus-visible {
+    outline: 3px solid var(--sand);
+    outline-offset: 2px;
+}
+
+/* Submit + Clear Form */
+.form-buttons {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    gap: 1rem;
+    margin-top: 0.25rem;
+}
+
+.form-buttons button {
+    min-width: 8.5rem;
+    min-height: 2.75rem;
+    padding: 0.6rem 1.5rem;
+
+    border: 0;
+    border-radius: 999px;
+
+    color: #000000;
+    cursor: pointer;
+    font-family: var(--font-display);
+    font-size: 0.8rem;
+    font-weight: 700;
+
+    transition: transform 0.25s ease, background-color 0.25s ease;
+}
+
+.form-buttons button:hover {
+    background-color: #ffffff;
+    transform: translateY(-2px);
+}
+
+.form-buttons button[type="submit"] {
+    background-color: var(--cream);
+}
+
+.form-buttons button[type="reset"] {
+    background-color: #d9d9d9;
+}
+
+/* ---------- Contact info strip ---------- */
+
+.contact-info-section {
+    padding: 3rem var(--gutter);
+
+    display: grid;
+    justify-items: center;
+    gap: 2rem;
+
+    background-color: var(--sky);
+    text-align: center;
+}
+
+.contact-card {
+    max-width: 36rem;
+}
+
+.contact-label {
+    margin-bottom: 0.25rem;
+    color: var(--royal);   /* Figma uses cream, which is too faint on light blue */
+    font-family: var(--font-display);
+    font-size: 0.8rem;
+    font-weight: 800;
+    letter-spacing: 0.06em;
+}
+
+.contact-card h3 {
+    margin-bottom: 0.2rem;
+    color: var(--navy);
+    font-size: 1rem;
+    font-weight: 800;
+}
+
+.contact-card h3 svg {
+    display: inline-block;
+    width: 1.1em;
+    height: 1.1em;
+    margin-right: 0.35rem;
+    vertical-align: -0.15em;
+}
+
+.contact-card address,
+.contact-card a {
+    color: var(--navy);
+    font-family: var(--font-body);
+    font-size: 0.9rem;
+    font-style: normal;
+    font-weight: 700;
+    line-height: 1.6;
+}
+
+.contact-card a {
+    display: inline-block;
+    padding: 0.35rem 0;   /* bigger tap target */
+    text-underline-offset: 3px;
+}
+
+.contact-card a:hover {
+    color: var(--royal);
+}
+
+.contact-card p:not(.contact-label) {
+    color: #2b2f55;
+    font-family: var(--font-display);
+    font-size: 0.9rem;
+    font-weight: 500;
+}
+
+/* No contact row in this footer, so no divider line above it */
+.utl.contact footer {
+    border-top: 0;
+}
+
+.utl.contact .footer-bottom {
+    padding-top: 2.5rem;
+}
+
+
+/* ==========================================================
+   5. FOOTER
+   ========================================================== */
+
+footer {
+    background-color: var(--navy);
+    color: #ffffff;
+}
+
+.utl footer {
+    border-top: 1px solid rgba(253, 251, 212, 0.35);
+}
+
+.footer-contact {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 1rem;
+    padding: 1.75rem 6% 0;
+}
+
+.footer-contact a {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.5rem;
+    min-height: 44px;
+
+    color: var(--cream);
+    font-family: var(--font-body);
+    font-size: 0.85rem;
+    text-decoration: none;
+}
+
+.footer-contact a:hover {
+    color: var(--sand);
+}
+
+.footer-contact a[href^="tel:"] {
+    text-decoration: underline;
+    text-underline-offset: 4px;
+}
+
+.footer-contact svg {
+    width: 20px;
+    height: 20px;
+    flex-shrink: 0;
+}
+
+.footer-bottom {
+    border-top: 1px solid rgba(253, 251, 212, 0.2);
+
+    width: min(1200px, 92%);
+    margin: 0 auto;
+    padding: 1.5rem 0;
+
+    display: flex;
+    justify-content: center;
+    gap: 1rem;
+
+    color: #a9a9a9;
+    font-size: 0.75rem;
+}
+
+.utl .footer-bottom {
+    border-top: 0;
+    padding: 0.5rem 0 2rem;
+    color: #d8d8d8;
+    font-family: var(--font-display);
+}
+
+
+/* ==========================================================
+   6. MEDIA QUERIES
+   The base styles above are a calm single-column layout.
+   Each query below layers on what changes at that size.
+   ========================================================== */
+
+/* ---------- MOBILE: up to 767px ---------- */
+@media screen and (max-width: 767px) {
+
+    :root {
+        --section-y: 4rem;
+    }
+
+    /* ----- Header (Figma "Home (Mobile)" + "H-Menu") -----
+       Solid bar: hamburger on the left, logo in the middle.
+       The hamburger only works once JS adds .nav-enabled. */
+    .utl header {
+        padding: 6px 4%;
+        display: grid;
+        grid-template-columns: 44px 1fr 44px;
+        align-items: center;
+        gap: 0;
+        background-color: var(--navy-soft);
+    }
+
+    .utl header::before {
+        display: none;   /* the photo-fade backdrop is only for tablet/desktop */
+    }
+
+    .utl header.is-scrolled {
+        background-color: var(--navy-soft);
+    }
+
+    .logo-link {
+        grid-column: 2;
+        grid-row: 1;
+        justify-self: center;
+    }
+
+    .logo-link img {
+        width: 110px;
+    }
+
+    .nav-enabled .menu-toggle {
+        display: flex;
+        grid-column: 1;
+        grid-row: 1;
+    }
+
+    /* Open menu: one row of four links with thin dividers, under the bar */
+    .nav-enabled nav {
+        display: none;
+        position: absolute;
+        top: 100%;
+        left: 0;
+        right: 0;
+
+        background-color: var(--navy);
+        box-shadow: 0 12px 20px rgba(0, 0, 0, 0.35);
+    }
+
+    .nav-enabled nav.is-open {
+        display: block;
+        animation: nav-drop 0.2s ease-out;
+    }
+
+    .nav-enabled nav ul,
+    .utl header.nav-enabled nav ul {
+        display: grid;
+        grid-template-columns: repeat(4, 1fr);
+        gap: 0;
+    }
+
+    .nav-enabled nav li + li {
+        border-left: 1px solid rgba(253, 251, 212, 0.35);
+    }
+
+    .nav-enabled nav a,
+    .utl header.nav-enabled nav a {
+        padding: 0.9rem 0.25rem;
+        border-bottom: 0;
+        font-size: 0.78rem;
+        text-align: center;
+    }
+
+    .utl header.nav-enabled nav a.active {
+        color: var(--sand);
+    }
+
+    /* Without JS the links just sit in a row under the logo */
+    header:not(.nav-enabled) nav {
+        grid-column: 1 / -1;
+    }
+
+    header:not(.nav-enabled) nav a {
+        padding: 12px 10px;
+        font-size: 0.85rem;
+    }
+
+    .utl header:not(.nav-enabled) nav ul {
+        gap: 0.5rem 1.25rem;
+    }
+
+    /* ----- Hero (all pages): starts below the 56px header bar ----- */
+    .hero {
+        height: 350px;
+        margin-top: 56px;
+    }
+
+    /* ----- Home (Figma "Home (Mobile)") ----- */
+    .intro-section {
+        padding: 2.5rem 6% 3rem;
+    }
+
+    .intro-content h2 {
+        font-size: 2rem;
+    }
+
+    .intro-content > p {
+        font-size: 0.8rem;
+    }
+
+    .intro-aside {
+        display: none;   /* the mobile design has no mission box */
+    }
+
+    .drinks-visual {
+        min-height: 0;
+        aspect-ratio: 1 / 1;
+    }
+
+    .drinks-panel {
+        padding: 2.75rem 8% 3rem;
+        text-align: center;
+    }
+
+    .drinks-panel h2 {
+        font-size: 2.6rem;
+    }
+
+    .drink-list {
+        width: 84%;
+        margin: 1.75rem auto 0;
+    }
+
+    .drink-card {
+        grid-template-columns: 2rem 1fr;
+        padding: 1rem;
+        text-align: left;
+    }
+
+    .drink-card h3 {
+        font-size: 0.9rem;
+    }
+
+    .drink-card p {
+        font-size: 0.75rem;
+    }
+
+    .drinks-note {
+        display: none;
+    }
+
+    .experience-section {
+        padding: 2.25rem 6% 3.5rem;
+    }
+
+    .experience-section .section-heading {
+        margin-bottom: 2rem;
+    }
+
+    .experience-section h2 {
+        margin-bottom: 0;
+        font-size: clamp(1.1rem, 4.6vw, 1.5rem);
+    }
+
+    .experience-section .section-heading p,
+    .experience-grid {
+        display: none;   /* the video below replaces the subtitle + 3 cards */
+    }
+
+    .experience-video {
+        display: block;
+    }
+
+    /* Menu hero: the bar above already takes up the top space */
+    .menu-hero-content {
+        padding-top: 3.5rem;
+    }
+
+    /* Contact: form card and info stack in one column (base styles) */
+    .contact-form-section {
+        padding-top: 2rem;
+    }
+
+    /* Menu: tables and quote stack in one column (base styles) */
+    .menu-quote {
+        padding: 2rem 1.5rem;
+    }
+
+    .menu-quote blockquote {
+        font-size: 1.15rem;
+    }
+
+    .footer-bottom {
+        flex-wrap: wrap;
+        gap: 0.15rem 0.75rem;
+        font-size: 0.7rem;
+        text-align: center;
+    }
+}
+
+
+/* ---------- TABLET: 768px and up ---------- */
+@media screen and (min-width: 768px) {
+
+    :root {
+        --section-y: 5rem;
+    }
+
+    header {
+        padding: 18px 5%;
+        flex-wrap: nowrap;
+    }
+
+    .logo-link img {
+        width: 200px;
+    }
+
+    .utl header nav ul {
+        gap: 1.75rem;
+    }
+
+    .hero {
+        height: 420px;
+    }
+
+    .intro-section {
+        padding: 5rem var(--gutter);
+    }
+
+    .intro-aside {
+        max-width: 420px;
+    }
+
+    /* Drinks: photo on the left, panel on the right */
+    .drinks-section {
+        grid-template-columns: 1.15fr 1fr;
+        min-height: 640px;
+    }
+
+    .drinks-visual {
+        min-height: 0;
+    }
+
+    .drinks-panel {
+        padding: 3.5rem 2.5rem;
+    }
+
+    /* Experience: 2 columns, the third card is centred underneath */
+    .experience-section {
+        padding: 5rem 5% 6rem;
+    }
+
+    .experience-grid {
+        grid-template-columns: repeat(2, 1fr);
+        gap: 2.5rem;
+    }
+
+    .experience-card:last-child {
+        grid-column: 1 / -1;
+        justify-self: center;
+        width: calc(50% - 1.25rem);
+    }
+
+    /* About: photo beside the story card, card beside the heading */
+    .story-section {
+        grid-template-columns: 240px 1fr;
+        gap: 2.5rem;
+        padding-top: 3rem;
+    }
+
+    .story-image {
+        aspect-ratio: 1 / 1;
+    }
+
+    .story-content {
+        padding: 2rem;
+    }
+
+    .craft-section {
+        grid-template-columns: 270px 1fr;
+        gap: 2.5rem;
+        padding: 4rem var(--gutter) 5rem;
+    }
+
+    .craft-content {
+        grid-column: 2;
+        grid-row: 1;
+    }
+
+    .craft-content h2 {
+        font-size: clamp(2rem, 4.8vw, 2.9rem);
+    }
+
+    .craft-note {
+        grid-column: 1;
+        grid-row: 1;
+    }
+
+    /* Contact: roomier form card and info strip */
+    .contact-form-section {
+        padding: 4rem 5% 4.5rem;
+    }
+
+    .contact-form {
+        padding: 2rem 2.25rem;
+    }
+
+    .contact-info-section {
+        padding: 3.5rem 5%;
+        gap: 2.25rem;
+    }
+
+    /* Menu: three tables side by side, quote beside the heading */
+    .menu-hero-content {
+        padding: 9rem 5% 5rem;
+    }
+
+    .menu-tables {
+        grid-template-columns: repeat(3, 1fr);
+        gap: 1rem;
+    }
+
+    .menu-table caption,
+    .menu-table th,
+    .menu-table td {
+        padding: 0.7rem 0.75rem;
+    }
+
+    .menu-table th,
+    .menu-table td {
+        font-size: 0.8rem;
+    }
+
+    .menu-experience {
+        grid-template-columns: 1fr 240px;
+        gap: 2.5rem;
+        padding: 5rem 5%;
+    }
+
+    .menu-experience-content h2 {
+        font-size: clamp(2.2rem, 5vw, 3rem);
+    }
+
+    .footer-bottom {
+        flex-direction: row;
+    }
+}
+
+
+/* ---------- DESKTOP: 1024px and up ---------- */
+@media screen and (min-width: 1024px) {
+
+    :root {
+        --section-y: 6rem;
+    }
+
+    header {
+        padding: 20px 5%;
+    }
+
+    .logo-link img {
+        width: 250px;
+    }
+
+    .utl header nav ul {
+        gap: 2.75rem;
+    }
+
+    .hero {
+        height: clamp(480px, 38vw, 580px);
+    }
+
+    .intro-section {
+        grid-template-columns: 1fr 340px;
+        gap: 4rem;
+        padding: 6rem var(--gutter);
+    }
+
+    .intro-aside {
+        max-width: none;
+        padding: 2.25rem;
+    }
+
+    .drinks-section {
+        grid-template-columns: 1.27fr 1fr;
+        min-height: 780px;
+    }
+
+    .drinks-photos {
+        width: min(39%, 340px);
+    }
+
+    .drinks-panel {
+        padding: 4.5rem 3.5rem;
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+    }
+
+    .experience-section {
+        padding: 6rem 5% 7rem;
+    }
+
+    .experience-grid {
+        grid-template-columns: repeat(3, 1fr);
+        gap: 3rem;
+    }
+
+    .experience-card:last-child {
+        grid-column: auto;
+        width: auto;
+    }
+
+    /* Contact */
+    .contact-form-section {
+        padding: 4.5rem var(--gutter) 5rem;
+    }
+
+    .contact-form-section h2 {
+        margin-bottom: 2.25rem;
+    }
+
+    .contact-form {
+        padding: 2.25rem 2.5rem;
+    }
+
+    .contact-info-section {
+        padding: 4rem var(--gutter);
+        gap: 2.5rem;
+    }
+
+    /* Menu */
+    .menu-hero-content {
+        padding: 12rem var(--gutter) 8rem;
+    }
+
+    .menu-hero .section-heading {
+        margin-bottom: 3rem;
+    }
+
+    .menu-tables {
+        gap: 3.5rem;
+    }
+
+    .menu-table caption,
+    .menu-table th,
+    .menu-table td {
+        padding: 0.8rem 1rem;
+    }
+
+    .menu-table th,
+    .menu-table td {
+        font-size: 0.85rem;
+    }
+
+    .menu-table td {
+        font-size: 0.95rem;
+    }
+
+    .menu-experience {
+        grid-template-columns: 1fr 360px;
+        gap: 5rem;
+        padding: 5rem var(--gutter);
+    }
+
+    .menu-experience-content h2 {
+        font-size: clamp(3rem, 4.4vw, 4rem);
+    }
+
+    .menu-quote {
+        padding: 3.5rem 2.5rem;
+    }
+
+    .menu-quote blockquote {
+        font-size: 1.45rem;
+    }
+
+    /* About */
+    .story-section {
+        grid-template-columns: 350px 1fr;
+        gap: 5rem;
+        padding-top: 3.5rem;
+    }
+
+    .story-content {
+        padding: 2.25rem 2.5rem;
+    }
+
+    .craft-content h2 {
+        font-size: clamp(3rem, 4.8vw, 4.5rem);
+    }
+
+    .craft-section {
+        grid-template-columns: 400px 1fr;
+        gap: 5rem;
+        padding: 6rem var(--gutter) 6rem;
+    }
+}
+
+
+/* ==========================================================
+   7. PRINT
+   ========================================================== */
+
+@media print {
+
+    body,
+    .utl {
+        background-color: #ffffff;
+        color: #000000;
+    }
+
+    header,
+    .menu-toggle,
+    .music-section {
+        display: none;
+    }
+
+    .hero-overlay {
+        display: none;
+    }
+
+    footer {
+        background-color: #ffffff;
+        color: #000000;
+    }
+}
+
+@media (prefers-reduced-motion: reduce) {
+
+    html {
+        scroll-behavior: auto;
+    }
+
+    *,
+    *::before,
+    *::after {
+        animation-duration: 0.01ms !important;
+        transition-duration: 0.01ms !important;
+    }
+}

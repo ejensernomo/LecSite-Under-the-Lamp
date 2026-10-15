@@ -1,0 +1,120 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <!-- Full Name: Elisha Jenser A. Nomo 
+     Section: WD-202
+     Activity: Under The Lamp
+     Date: October 2026 
+     -->
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="Learn how Under The Lamp started: a cozy shop built for deep conversations, creative ideas, and drinks made for every mood.">
+    <title>About Us | Under The Lamp Coffee</title>
+
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Archivo+Black&family=DM+Sans:wght@400;500;700&family=IBM+Plex+Mono:wght@400;500;700&family=Inter:wght@500;700;800&family=Patrick+Hand&family=Patrick+Hand+SC&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="styles.css">
+    <link rel="icon" type="image/png" sizes="100x100" href="img/favicon.png">
+
+    <script src="script.js" defer></script>
+</head>
+
+<body class="utl about">
+<a href="#main-content" class="skip-link">Skip to main content</a>
+
+<div id="container">
+
+    <!-- HEADER AND NAVIGATION -->
+    <header>
+        <a href="index.html" class="logo-link">
+            <img src="img/logo.jpeg" alt="Under The Lamp Coffee logo">
+        </a>
+
+        <!-- Hamburger button: shown on mobile once js/script.js runs -->
+        <button class="menu-toggle" type="button"
+                aria-expanded="false"
+                aria-controls="primary-nav"
+                aria-label="Open menu">
+            <span></span>
+            <span></span>
+            <span></span>
+        </button>
+
+        <nav id="primary-nav" aria-label="Main Navigation">
+            <ul>
+                <li><a href="index.html">Home</a></li>
+                <li><a href="about.html" class="active" aria-current="page">About Us</a></li>
+                <li><a href="menu.html">Menu</a></li>
+                <li><a href="contact.html">Contact Us</a></li>
+            </ul>
+        </nav>
+    </header>
+
+    <main id="main-content">
+
+        <!-- HERO: photo only, header floats on top of it -->
+        <section class="hero" aria-label="About Under The Lamp">
+            <h1 class="sr-only">About Under The Lamp Coffee</h1>
+            <img src="img/hero-about.jpg" alt="People gathered inside Under The Lamp Coffee" class="hero-image">
+            <div class="hero-overlay"></div>
+        </section>
+
+        <!-- OUR STORY -->
+        <section class="story-section">
+            <div class="story-image">
+                <img src="img/addition(3).jpg" alt="Friends laughing together at Under The Lamp" loading="lazy">
+            </div>
+
+            <article class="story-content">
+                <p class="section-label">OUR STORY</p>
+                <h2>It Started With A Conversation.</h2>
+                <p>Under the Lamp was born out of a love for those late-night deep conversations, creative breakthroughs, and cozy, impromptu jam sessions. We wanted to capture that exact feeling and bring it into the daytime.</p>
+                <p>That’s why we designed our shop to feel less like a rigid commercial café and more like an extension of your own backyard — relaxed, familiar, and completely open to everyone.</p>
+                <p>Every corner of UTL is meant to encourage you to stay a little longer, talk a little deeper, and enjoy the moment you're in.</p>
+            </article>
+        </section>
+
+        <!-- OUR CRAFT -->
+        <section class="craft-section">
+            <div class="craft-content">
+                <h2>Drinks Made<br> For Every Mood.</h2>
+                <p>We believe that a great drink is the ultimate catalyst for connection. That’s why our bar is dedicated to serving unique flavor profiles you won’t find anywhere else.</p>
+                <p>Whether you're a coffee purist or looking for something sweet, we treat every drink as an opportunity to create something memorable.</p>
+            </div>
+
+            <aside class="craft-note">
+                <h3>Made With Care</h3>
+                <p>From familiar favorites to unique creations, every drink is part of the UTL experience.</p>
+            </aside>
+        </section>
+
+    </main>
+
+    <!-- FOOTER -->
+    <footer>
+        <div class="footer-contact">
+            <!-- Replace href="#" with your Instagram link -->
+            <a href="#" aria-label="Under The Lamp on Instagram">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+                    <rect x="3" y="3" width="18" height="18" rx="5"/>
+                    <circle cx="12" cy="12" r="4"/>
+                    <circle cx="17.2" cy="6.8" r="0.6" fill="currentColor"/>
+                </svg>
+            </a>
+            <a href="tel:8145559608">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+                    <path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72 12.84 12.84 0 0 0 .7 2.81 2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45 12.84 12.84 0 0 0 2.81.7A2 2 0 0 1 22 16.92z"/>
+                </svg>
+                (814) 555-9608
+            </a>
+        </div>
+
+        <div class="footer-bottom">
+            <p>&copy; 2026 Under The Lamp. All Rights Reserved.</p>
+            <p>Created by Jenser Nomo</p>
+        </div>
+    </footer>
+</div>
+</body>
+</html>
