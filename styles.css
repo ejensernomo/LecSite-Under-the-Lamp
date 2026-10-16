@@ -37,6 +37,7 @@
     /* horizontal page gutter: 6% on small screens, centres a 1200px column on wide ones */
     --gutter: max(6%, calc((100% - 1200px) / 2));
     --section-y: 5rem;
+    --header-height: 56px;   /* solid header bar on mobile + tablet */
 }
 
 
@@ -1316,6 +1317,8 @@ footer {
    6. MEDIA QUERIES
    The base styles above are a calm single-column layout.
    Each query below layers on what changes at that size.
+   Tablet and Desktop are cumulative: Desktop starts from the
+   tablet rules, so its first block "undoes" the tablet-only changes.
    ========================================================== */
 
 /* ---------- MOBILE: up to 767px ---------- */
@@ -1415,10 +1418,10 @@ footer {
         gap: 0.5rem 1.25rem;
     }
 
-    /* ----- Hero (all pages): starts below the 56px header bar ----- */
+    /* ----- Hero (all pages): starts below the header bar ----- */
     .hero {
         height: 350px;
-        margin-top: 56px;
+        margin-top: var(--header-height);
     }
 
     /* ----- Home (Figma "Home (Mobile)") ----- */
@@ -1532,35 +1535,62 @@ footer {
         --section-y: 5rem;
     }
 
-    header {
-        padding: 18px 5%;
+    /* ----- Header (Figma "Home (Tablet)") -----
+       Solid bar like mobile, but the four links sit inline on the right,
+       so there is no hamburger at this size. */
+    .utl header {
+        min-height: var(--header-height);
+        padding: 0 3.5%;
         flex-wrap: nowrap;
+        background-color: var(--navy-soft);
+    }
+
+    .utl header::before {
+        display: none;   /* the photo-fade backdrop is only for desktop */
+    }
+
+    .utl header.is-scrolled {
+        background-color: var(--navy-soft);
     }
 
     .logo-link img {
-        width: 200px;
+        width: 120px;
     }
 
     .utl header nav ul {
-        gap: 1.75rem;
+        gap: 2.25rem;
     }
 
+    .utl header nav a {
+        font-size: 0.8rem;
+    }
+
+    /* ----- Hero (all pages): starts below the header bar ----- */
     .hero {
-        height: 420px;
+        height: clamp(300px, 38vw, 420px);
+        margin-top: var(--header-height);
     }
 
+    /* ----- Home (Figma "Home (Tablet)") ----- */
     .intro-section {
-        padding: 5rem var(--gutter);
+        padding: 3rem 3.5% 3.5rem;
+    }
+
+    .intro-content h2 {
+        font-size: 3.2rem;
+    }
+
+    .intro-content > p {
+        font-size: 0.85rem;
     }
 
     .intro-aside {
-        max-width: 420px;
+        display: none;   /* the tablet design has no mission box */
     }
 
-    /* Drinks: photo on the left, panel on the right */
+    /* Drinks: photo on the left, panel on the right (heading centred) */
     .drinks-section {
-        grid-template-columns: 1.15fr 1fr;
-        min-height: 640px;
+        grid-template-columns: 0.95fr 1fr;
     }
 
     .drinks-visual {
@@ -1568,23 +1598,41 @@ footer {
     }
 
     .drinks-panel {
-        padding: 3.5rem 2.5rem;
+        padding: 2.5rem 5%;
+        text-align: center;
     }
 
-    /* Experience: 2 columns, the third card is centred underneath */
+    .drinks-panel h2 {
+        font-size: 2.5rem;
+    }
+
+    .drink-card {
+        text-align: left;
+    }
+
+    /* Experience: a portrait video instead of the three cards */
     .experience-section {
-        padding: 5rem 5% 6rem;
+        padding: 2.5rem 3.5% 3rem;
     }
 
+    .experience-section h2 {
+        margin-bottom: 0;
+        font-size: 1.5rem;
+    }
+
+    .experience-section .section-heading p,
     .experience-grid {
-        grid-template-columns: repeat(2, 1fr);
-        gap: 2.5rem;
+        display: none;   /* the video below replaces the subtitle + 3 cards */
     }
 
-    .experience-card:last-child {
-        grid-column: 1 / -1;
-        justify-self: center;
-        width: calc(50% - 1.25rem);
+    .experience-video {
+        display: block;
+        width: 280px;
+    }
+
+    /* The audio sample is not part of the tablet design */
+    .music-section {
+        display: none;
     }
 
     /* About: photo beside the story card, card beside the heading */
@@ -1638,7 +1686,7 @@ footer {
 
     /* Menu: three tables side by side, quote beside the heading */
     .menu-hero-content {
-        padding: 9rem 5% 5rem;
+        padding: 5.5rem 5% 5rem;
     }
 
     .menu-tables {
@@ -1680,8 +1728,20 @@ footer {
         --section-y: 6rem;
     }
 
-    header {
+    /* ----- Desktop undoes what the tablet layout changed ----- */
+
+    /* Header: transparent bar floating over the photo again */
+    .utl header {
         padding: 20px 5%;
+        background-color: rgba(0, 0, 51, 0);
+    }
+
+    .utl header::before {
+        display: block;
+    }
+
+    .utl header.is-scrolled {
+        background-color: var(--navy);
     }
 
     .logo-link img {
@@ -1692,9 +1752,58 @@ footer {
         gap: 2.75rem;
     }
 
+    .utl header nav a {
+        font-size: 0.95rem;
+    }
+
     .hero {
         height: clamp(480px, 38vw, 580px);
+        margin-top: 0;
     }
+
+    /* Home: mission box, left-aligned drinks panel, three cards, audio */
+    .intro-content h2 {
+        font-size: clamp(2.1rem, 7vw, 3.5rem);
+    }
+
+    .intro-content > p {
+        font-size: 0.95rem;
+    }
+
+    .intro-aside {
+        display: block;
+    }
+
+    .drinks-panel {
+        text-align: left;
+    }
+
+    .drinks-panel h2 {
+        font-size: 3.2rem;
+    }
+
+    .experience-section h2 {
+        margin-bottom: 0.75rem;
+        font-size: clamp(2rem, 6.5vw, 3.6rem);
+    }
+
+    .experience-section .section-heading p {
+        display: block;
+    }
+
+    .experience-grid {
+        display: grid;
+    }
+
+    .experience-video {
+        display: none;
+    }
+
+    .music-section {
+        display: block;
+    }
+
+    /* ----- Desktop layout (Figma "Home (Desktop)") ----- */
 
     .intro-section {
         grid-template-columns: 1fr 340px;
@@ -1730,11 +1839,6 @@ footer {
     .experience-grid {
         grid-template-columns: repeat(3, 1fr);
         gap: 3rem;
-    }
-
-    .experience-card:last-child {
-        grid-column: auto;
-        width: auto;
     }
 
     /* Contact */
