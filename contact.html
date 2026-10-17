@@ -15,7 +15,7 @@
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Archivo+Black&family=DM+Sans:wght@400;500;700&family=IBM+Plex+Mono:wght@400;500;700&family=Inter:wght@500;700;800&family=Patrick+Hand&family=Patrick+Hand+SC&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="styles.css">
-    <link rel="icon" type="image/jpeg" sizes="100x100" href="img/favicon.png">
+    <link rel="icon" type="image/png" sizes="100x100" href="img/favicon.png">
 
     <script src="script.js" defer></script>
 </head>
@@ -31,7 +31,7 @@
             <img src="img/logo.jpeg" alt="Under The Lamp Coffee logo">
         </a>
 
-        <!-- Hamburger button: shown on mobile once js/script.js runs -->
+        <!-- Hamburger button: shown on mobile once script.js runs -->
         <button class="menu-toggle" type="button"
                 aria-expanded="false"
                 aria-controls="primary-nav"
@@ -77,9 +77,9 @@
                     </div>
 
                     <div class="form-field">
-                        <label for="email">Email Address</label>
-                        <input type="email" id="email" name="email"
-                               placeholder="youremail@example.com"
+                        <label for="question?">What is your favorite drink from UTL?</label>
+                        <input type="question" id="question" name="question"
+                               placeholder="e.g: Putobumbong Latte"
                                maxlength="100" required>
                     </div>
                 </fieldset>
@@ -149,6 +149,23 @@
         </section>
 
     </main>
+
+    <!-- MUSIC PLAYER (class requirement) - PERSISTENT
+         It sits OUTSIDE <main> on every page so script.js never replaces it
+         when you move between pages. That is what keeps the music playing.
+         It is only visible on Home (see styles.css); on the other pages it
+         stays hidden but keeps playing. -->
+    <section class="music-section" id="music-sample" aria-label="Audio sample">
+        <h3>Set the mood</h3>
+        <p>Press play for a sample of the sounds under our lamp.</p>
+
+        <audio controls preload="none" loop>
+            <source src="img/Fleetwood Mac - Everywhere (Official Music Video) [HD] - (64 Kbps).mp3" type="audio/mpeg">
+            <source src="media/ffc_audio.ogg" type="audio/ogg">
+            <p>Your browser does not support the audio element.</p>
+        </audio>
+    </section>
+
 
     <!-- FOOTER -->
     <footer>

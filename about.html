@@ -31,7 +31,7 @@
             <img src="img/logo.jpeg" alt="Under The Lamp Coffee logo">
         </a>
 
-        <!-- Hamburger button: shown on mobile once js/script.js runs -->
+        <!-- Hamburger button: shown on mobile once script.js runs -->
         <button class="menu-toggle" type="button"
                 aria-expanded="false"
                 aria-controls="primary-nav"
@@ -90,6 +90,23 @@
         </section>
 
     </main>
+
+    <!-- MUSIC PLAYER (class requirement) - PERSISTENT
+         It sits OUTSIDE <main> on every page so script.js never replaces it
+         when you move between pages. That is what keeps the music playing.
+         It is only visible on Home (see styles.css); on the other pages it
+         stays hidden but keeps playing. -->
+    <section class="music-section" id="music-sample" aria-label="Audio sample">
+        <h3>Set the mood</h3>
+        <p>Press play for a sample of the sounds under our lamp.</p>
+
+        <audio controls preload="none" loop>
+            <source src="img/Fleetwood Mac - Everywhere (Official Music Video) [HD] - (64 Kbps).mp3" type="audio/mpeg">
+            <source src="media/ffc_audio.ogg" type="audio/ogg">
+            <p>Your browser does not support the audio element.</p>
+        </audio>
+    </section>
+
 
     <!-- FOOTER -->
     <footer>

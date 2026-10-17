@@ -12,6 +12,7 @@
     4b. About page
     4c. Menu page
     4d. Contact page
+    4e. Music player (all pages)
     5. Footer
     6. Media queries: MOBILE, TABLET, DESKTOP
     7. Print
@@ -1239,6 +1240,23 @@ header nav a.active {
 
 .utl.contact .footer-bottom {
     padding-top: 2.5rem;
+}
+
+
+/* ==========================================================
+   4e. MUSIC PLAYER (all pages)
+   The player lives outside <main> on every page so the music keeps
+   playing when script.js swaps pages. It is only SHOWN on Home.
+   ========================================================== */
+
+/* Hidden (not removed) on other pages, so the audio keeps playing */
+body:not(.home) .music-section {
+    display: none;
+}
+
+/* After a page swap the new <main> gets focus for keyboard users: no outline needed */
+main:focus {
+    outline: none;
 }
 
 
